@@ -67,8 +67,19 @@ contract Marketplace {
                            price);
 
      itemCounter++;
-
-   
  }
+
+   function buyMarketItem(uint256 itemId) public payable {
+      require(marketItems[itemId].isPresent, "Item is not present.");
+      require(! marketItems[itemId].isSold, "Item is already sold");
+      require(marketItems[itemId].price == msg.value, "Must pay the correct price.");
+
+      marketItems[tokenId].isSold = true;
+      marketItems[itemId].owner = payable(msg.sender);
+
+      IERC721(marketItems[tokenId].nftContractAddress).transferFrom(address(this),
+                                                                    msg.sender,
+                                                                    tokenId);
+   }
 
 }
