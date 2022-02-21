@@ -21,7 +21,7 @@ contract Marketplace {
       bool isPresent;
    }
 
-   mapping(uint256 => MArjetItem) private marketItems;
+   mapping(uint256 => MarketItem) private marketItems;
 
 
    event MarketItemListed(
@@ -35,7 +35,7 @@ contract Marketplace {
    
    constructor() {
       itemCounter = 0;
-      owner ) payable(msg.sender);
+      owner = payable(msg.sender);
       listingPrice = 0.01 ether;
    }
 
