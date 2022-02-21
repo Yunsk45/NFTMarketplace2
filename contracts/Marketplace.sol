@@ -82,4 +82,13 @@ contract Marketplace {
                                                                     tokenId);
    }
 
+   function getMarketItem(uint256 itemId) public view returns (MarketItem memory items) {
+      items = marketItems[itemId];
+   }   
+   function changeListingPrice(uint256 newPrice) public {
+      require(newPrice > 0);
+      require(msg.sender == owner, "Only the ownner of the marketplace can change the listing price");
+
+      listingPrice = newPrice;
+   }
 }
