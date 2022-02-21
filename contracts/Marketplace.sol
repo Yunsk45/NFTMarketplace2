@@ -41,8 +41,8 @@ contract Marketplace {
 
 
    function listMarketItem(address nftContractAddress, uint256 tokenId, uint256 price) public payable {
-      require(msg.value == listingPrice, "Must pay for exact amount for listing.");
-      require(price > 0, "Price musr be greater than 0.");
+      require(msg.value == listingPrice, "Must pay the listing price");
+      require(price > 0, "Price must be greater than 0.");
 
       marketItems[itemCounter] =  MarketItem(itemCounter,
                                              nftContractAddress,
