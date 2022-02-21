@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Unlicensed
 
-pragma solidity 0.8.4;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
@@ -13,9 +13,9 @@ contract Marketplace {
    struct MarketItem {
       uint256 itemId;
       address nftContractAddress;
-      uint256 tokenId:
+      uint256 tokenId;
       address payable seller;
-      adress payable owner;
+      address payable owner;
       uint256 price;
       bool isSold;
       bool isPresent;
@@ -48,16 +48,16 @@ contract Marketplace {
                                              nftContractAddress,
                                              tokenId,
                                              payable(msg.sender),
-                                             address(0),
+                                             payable(address(0)),
                                              price,
                                              false,
                                              true);
 
-     IERC721(nftContractAddress).transferFrom(msg.Sender,
+     IERC721(nftContractAddress).transferFrom(msg.sender,
                                               address(this),
                                               tokenId);
 
-     payabke(owner).transfer(listingPrice);
+     payable(owner).transfer(listingPrice);
 
      emit MarketItemListed(itemCounter,
                            nftContractAddress,
@@ -74,12 +74,12 @@ contract Marketplace {
       require(! marketItems[itemId].isSold, "Item is already sold");
       require(marketItems[itemId].price == msg.value, "Must pay the correct price.");
 
-      marketItems[tokenId].isSold = true;
+      marketItems[itemId].isSold = true;
       marketItems[itemId].owner = payable(msg.sender);
 
-      IERC721(marketItems[tokenId].nftContractAddress).transferFrom(address(this),
+      IERC721(marketItems[itemId].nftContractAddress).transferFrom(address(this),
                                                                     msg.sender,
-                                                                    tokenId);
+                                                                    marketItems[itemId].tokenId);
    }
 
    function getMarketItem(uint256 itemId) public view returns (MarketItem memory items) {
